@@ -9,4 +9,7 @@ class Category extends Model
 {
     protected $fillable = ['category_name', 'description'];
     use SoftDeletes;
+
+    //punya bapak
+    // return $this->belongsTo(Movie::class);
 }
