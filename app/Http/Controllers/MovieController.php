@@ -46,7 +46,7 @@ class MovieController extends Controller
 
     //     Movie::create($validated);
 
-    //     return redirect()->route('movie.index')->with('success', 'Movie berhasil ditambahkan!');
+    //     return redirect()->route('create-movie')->with('success', 'Movie berhasil ditambahkan!');
     // }
 
     // public function edit(string $id)
@@ -133,6 +133,93 @@ class MovieController extends Controller
         $movie = Movie::findOrfail($id);
         return view('detailmovie', compact('movie'));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function create()
+    {
+        $categories = Category::all();
+        return view('layouts.create_movie', compact('categories'));
+    }
+
+    public function store(Request $request)
+    {
+        // $validated = $request->validate(
+        //     [
+        //         'title' => 'required|string|max:255',
+        //         'synopsis' => 'nullable|string',
+        //         'category_id' => 'required|exists:categories,id',
+        //         'year' => 'required|integer|min:1950|max:'.date('Y'),
+        //         'actors' => 'required|string',
+        //         'cover_image' => 'nullable|image|mimes:jpg,jpeg,webp'
+        //     ]
+        //     );
+
+        //     $slug = Str::slug($request->title);
+
+        //     //ambil input file dan simpan ke storage
+        //     $cover = null;
+        //     ifm($request->hasFile('cover_image')) {
+        //         $cover = $request->file('cover_image')->storage('covers', 'public');
+        //     }
+
+        //     //simpan ke tabel movies
+        //     Movie::create(
+        //         [
+        //             'title' => $validated['title'],
+        //             'slug' => $slug,
+        //             'synopsis' => $validated['synopsis'],
+        //             'category_id' => $validated['category_id'],
+        //             'year' => $validated['year'],
+        //             'actors' => $validated['actors'],
+        //             'cover_image' => $cover,
+        //         ]
+        //         );
+
+        //         return redirect('/')->with('success', 'Movie saved successfully!');
+
+
+
+
+
+        $request->validate([
+            'title' => 'required',
+            'synopsis' => 'required',
+            'category_id' => 'required|exists:categories,id',
+            'year' => 'required|numeric|min:1900|max:' . date('Y'),
+            'actors' => 'required',
+            'cover_image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+        ]);
+
+        $coverPath = $request->file('cover_image')->store('covers', 'public');
+
+        Movie::create([
+            'title' => $request->title,
+            'slug' => Str::slug($request->title),
+            'synopsis' => $request->synopsis,
+            'category_id' => $request->category_id,
+            'year' => $request->year,
+            'actors' => $request->actors,
+            'cover_image' => $coverPath, 
+        ]);
+
+        return redirect('/')->with('success', 'Movie berhasil ditambahkan!');
+    }
+
 
 
 

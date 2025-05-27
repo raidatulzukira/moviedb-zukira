@@ -21,6 +21,12 @@
                 <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
+                <a class="nav-link" href="{{ route('createMovie')}}">Input Movie</a>
+                </li>
+
+                {{-- <a class="nav-link" href="{{ route('createMovie') }}">Input Movie</a> --}}
+
+                <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
                 </li>
                 <li class="nav-item dropdown">
