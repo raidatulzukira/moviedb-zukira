@@ -6,7 +6,7 @@
 
 {{-- <div class="row">
     <div class="col-12">
-        <h1 class="h2 mb-4 border-bottom pb-2">Input Data Movie</h1> --}}
+        <h1 class="h2 mb-4 border-bottom pb-4">Input Data Movie</h1> --}}
 
         <a href="/data-movie" class="btn btn-success mb-4">Data Movie</a>
 

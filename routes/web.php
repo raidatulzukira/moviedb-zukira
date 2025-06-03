@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [MovieController::class, 'homepage']);
 
 Route::resource('/category', CategoryController::class);
-// Route::resource('/movie', MovieController::class);
 
 // Route::get('/movie/{slug}', [MovieController::class, 'show'])->name('movies.show');
 // Route::get('/movie/{id}/{slug}', [MovieController::class, 'detail']);

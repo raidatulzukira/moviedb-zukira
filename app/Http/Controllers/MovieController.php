@@ -223,7 +223,7 @@ class MovieController extends Controller
     // public function dataMovie()
     // {
     //     $movies = Movie::latest()->paginate(10);
-    //     return view('dataMovie', compact('movies'));
+    //     return view('dataMovie', compact('movie'));
     // }
 
     public function dataMovie()
