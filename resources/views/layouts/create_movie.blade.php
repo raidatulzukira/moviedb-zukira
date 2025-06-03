@@ -1,9 +1,15 @@
 @extends('layouts.template')
 
 @section('content')
-<div class="row">
+<h1 class="mb-4 fw-bold">Input Data Movie</h1>
+    <div class="col-lg-12">
+
+{{-- <div class="row">
     <div class="col-12">
-        <h1 class="h2 mb-4 border-bottom pb-2">Input Data Movie</h1>
+        <h1 class="h2 mb-4 border-bottom pb-2">Input Data Movie</h1> --}}
+
+        <a href="/data-movie" class="btn btn-success mb-4">Data Movie</a>
+
         <form action="{{ route('movie.store') }}" method="POST" enctype="multipart/form-data" class="form-horizontal">
             @csrf
 

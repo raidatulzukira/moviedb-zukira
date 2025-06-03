@@ -202,7 +202,7 @@ class MovieController extends Controller
             'category_id' => 'required|exists:categories,id',
             'year' => 'required|numeric|min:1900|max:' . date('Y'),
             'actors' => 'required',
-            'cover_image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+            'cover_image' => 'required|image|mimes:jpg,png,jpeg,webp|max:2048',
         ]);
 
         $coverPath = $request->file('cover_image')->store('covers', 'public');
@@ -214,11 +214,24 @@ class MovieController extends Controller
             'category_id' => $request->category_id,
             'year' => $request->year,
             'actors' => $request->actors,
-            'cover_image' => $coverPath, 
+            'cover_image' => $coverPath,
         ]);
 
         return redirect('/')->with('success', 'Movie berhasil ditambahkan!');
     }
+
+    // public function dataMovie()
+    // {
+    //     $movies = Movie::latest()->paginate(10);
+    //     return view('dataMovie', compact('movies'));
+    // }
+
+    public function dataMovie()
+    {
+        $movies = Movie::with('category')->latest()->paginate(10);
+        return view('dataMovie', compact('movies'));
+    }
+
 
 
 

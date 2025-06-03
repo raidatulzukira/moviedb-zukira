@@ -20,6 +20,7 @@
                 <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
+                @auth
                 <li class="nav-item">
                 <a class="nav-link" href="{{ route('createMovie')}}">Input Movie</a>
                 </li>
@@ -31,15 +32,30 @@
                 </li>
                 <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown
+                    {{ Auth::user()->name }}
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">{{ Auth::user()->name }}</a></li>
                     <li><a class="dropdown-item" href="#">Another action</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+
+                    <li>
+
+                        <form action="/logout" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-link text-decoration-none text-white">
+                                Logout</button>
+                        </form>
+                    </li>
                 </ul>
                 </li>
+                @else
+              <li class="nav-item">
+                <a class="nav-link" href="{{route('login')}}">Login</a>
+              </li>
+
+              @endauth
+
 
             </ul>
             <form class="d-flex" role="search">
