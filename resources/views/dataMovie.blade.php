@@ -8,7 +8,14 @@
 <h1 class="mb-4 fw-bold">Data Movie</h1>
     <div class="col-lg-12">
 
-        <a href="/create-movie" class="btn btn-success mb-4">Input Movie</a>
+        <a href="/create-movie" class="btn btn-success mb-4">Input Data Movie</a>
+
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
 
 <table class="table table-striped table-hover table-bordered">
   <thead class="table-light">
@@ -17,6 +24,7 @@
       <th scope="col">Title</th>
       <th scope="col">Category</th>
       <th scope="col">Year</th>
+      <th scope="col">Actors</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
@@ -27,12 +35,19 @@
       <td>{{ $movie->title }}</td>
       <td>{{ $movie->category->category_name }}</td>
       <td>{{ $movie->year }}</td>
+      <td>{{ $movie->actors }}</td>
       <td>
         <a href="/movie/{{$movie->id}}/{{$movie->slug}}" class="btn btn-warning btn-sm">Detail</a>
-        <a href="#" class="btn btn-info btn-sm">Edit</a>
-        {{-- @can('admin') --}}
-        <a href="#" class="btn btn-danger btn-sm">Hapus</a>
-        {{-- @endcan --}}
+        {{-- <a href="/edit-movie/{{ $movie->id }}" class="btn btn-info btn-sm">Edit</a> --}}
+        <a href="{{ route('movie.edit', $movie->id) }}" class="btn btn-info btn-sm">Edit</a>
+        <form action="{{ route('movie.destroy', $movie->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
+            @csrf
+            @method('DELETE')
+            {{-- @can('admin') --}}
+            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+            {{-- @endcan --}}
+        </form>
+
       </td>
     </tr>
     @endforeach

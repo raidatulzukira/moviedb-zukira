@@ -135,21 +135,6 @@ class MovieController extends Controller
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function create()
     {
         $categories = Category::all();
@@ -232,8 +217,59 @@ class MovieController extends Controller
         return view('dataMovie', compact('movies'));
     }
 
+    public function edit(Movie $movie)   // Route: movies.edit
+    {
+        $categories = Category::all();
+        return view('layouts.edit_movie', compact('movie', 'categories'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $movie = Movie::findOrFail($id);
+
+        $request->validate([
+            'title' => 'required',
+            'synopsis' => 'required',
+            'category_id' => 'required|exists:categories,id',
+            'year' => 'required|numeric|min:1900|max:' . date('Y'),
+            'actors' => 'required',
+            'cover_image' => 'nullable|image|mimes:jpg,png,jpeg,webp|max:2048',
+        ]);
+
+        $data = [
+            'title' => $request->title,
+            'slug' => Str::slug($request->title),
+            'synopsis' => $request->synopsis,
+            'category_id' => $request->category_id,
+            'year' => $request->year,
+            'actors' => $request->actors,
+        ];
+
+        if ($request->hasFile('cover_image')) {
+            if ($movie->cover_image && Storage::disk('public')->exists($movie->cover_image)) {
+                Storage::disk('public')->delete($movie->cover_image);
+            }
+            $coverPath = $request->file('cover_image')->store('covers', 'public');
+            $data['cover_image'] = $coverPath;
+        }
+
+        $movie->update($data);
+
+        return redirect('/data-movie')->with('success', 'Data Movie berhasil diperbarui!');
+    }
 
 
+    public function destroy(Movie $movie)
+    {
+        if ($movie->cover_image) {
+            Storage::disk('public')->delete($movie->cover_image);
+        }
+        $movie->delete();
 
+        return redirect('/data-movie')
+        ->with('success', 'Data Movie berhasil dihapus!');
+
+
+    }
 
 }
