@@ -40,13 +40,16 @@
         <a href="/movie/{{$movie->id}}/{{$movie->slug}}" class="btn btn-warning btn-sm">Detail</a>
         {{-- <a href="/edit-movie/{{ $movie->id }}" class="btn btn-info btn-sm">Edit</a> --}}
         <a href="{{ route('movie.edit', $movie->id) }}" class="btn btn-info btn-sm">Edit</a>
+
+        @can('delete')
         <form action="{{ route('movie.destroy', $movie->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
             @csrf
             @method('DELETE')
-            {{-- @can('admin') --}}
+            {{-- @can('delete') --}}
             <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
             {{-- @endcan --}}
         </form>
+        @endcan
 
       </td>
     </tr>

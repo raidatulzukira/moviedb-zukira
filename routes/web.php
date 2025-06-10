@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MovieController;
+use App\Http\Middleware\RoleAdmin;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,12 +21,10 @@ Route::resource('/category', CategoryController::class)->middleware('auth');
 Route::get('create-movie', [MovieController::class, 'create'])->name('createMovie')->middleware('auth');
 Route::post('/movies', [MovieController::class, 'store'])->name('movie.store')->middleware('auth');
 // Tampilkan form edit movie
-// Route::get('/edit-movie/{id}', [MovieController::class, 'edit'])->middleware('auth');
-Route::get('/edit-movie/{movie}', [MovieController::class, 'edit'])->name('movie.edit')->middleware('auth');
+Route::get('/edit-movie/{movie}', [MovieController::class, 'edit'])->name('movie.edit')->middleware('auth', RoleAdmin::class);
 // Proses update movie
-Route::put('/update-movie/{id}', [MovieController::class, 'update'])->middleware('auth');
+Route::put('/update-movie/{id}', [MovieController::class, 'update'])->middleware('auth', RoleAdmin::class);
 // Proses hapus movie
-// Route::delete('/delete-movie/{id}', [MovieController::class, 'destroy'])->middleware('auth');
 Route::delete('/delete-movie/{movie}', [MovieController::class, 'destroy'])->middleware('auth')->name('movie.destroy');
 
 
