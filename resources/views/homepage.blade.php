@@ -8,7 +8,11 @@
 {{session('success')}}
 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-    
+
+@endif
+
+@if(request('search'))
+    <p class="mb-3">Menampilkan hasil untuk: <strong>{{ request('search') }}</strong></p>
 @endif
 
 <div class="row">

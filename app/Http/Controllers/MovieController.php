@@ -11,10 +11,20 @@ use Illuminate\Support\Facades\Storage;
 
 class MovieController extends Controller
 {
-    //apak
-    public function homepage()
+
+    public function homepage(Request $request)
     {
-        $movies = Movie::latest()->paginate(6);
+        $query = Movie::query();
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where('title', 'like', "%{$search}%")
+                ->orWhere('synopsis', 'like', "%{$search}%")
+                ->orWhere('actors', 'like', "%{$search}%")
+                ->orWhere('year', 'like', "%{$search}%");
+        }
+
+        $movies = $query->latest()->paginate(6);
         return view('homepage', compact('movies'));
     }
 
@@ -57,11 +67,24 @@ class MovieController extends Controller
         return redirect('/')->with('success', 'Movie berhasil ditambahkan!');
     }
 
-    public function dataMovie()
+    public function dataMovie(Request $request)
     {
-        $movies = Movie::with('category')->latest()->paginate(10);
+        $query = Movie::with('category');
+
+        if ($request->has('search') && $request->search) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%$search%")
+                ->orWhere('synopsis', 'like', "%$search%")
+                ->orWhere('year', 'like', "%$search%")
+                ->orWhere('actors', 'like', "%$search%");
+            });
+        }
+
+        $movies = $query->latest()->paginate(10);
         return view('dataMovie', compact('movies'));
     }
+
 
     public function edit(Movie $movie)   // Route: movies.edit
     {

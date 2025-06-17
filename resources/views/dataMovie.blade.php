@@ -1,10 +1,7 @@
 @extends('layouts.template')
 
 @section('content')
-{{-- <div class="row">
-    <div class="col-12">
 
-<h1 class="h2 mb-4 border-bottom pb-2">Data Movie</h1> --}}
 <h1 class="mb-4 fw-bold">Data Movie</h1>
     <div class="col-lg-12">
 
@@ -15,6 +12,13 @@
         {{ session('success') }}
     </div>
 @endif
+
+
+@if(request('search'))
+    <p class="mb-3">Menampilkan hasil untuk: <strong>{{ request('search') }}</strong></p>
+@endif
+
+
 
 
 <table class="table table-striped table-hover table-bordered">

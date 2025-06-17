@@ -35,8 +35,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout',[AuthController::class, 'logout']);
 // Route::post('/movie', [MovieController::class, 'store']);
 
-Route::get('/data-movie', [MovieController::class, 'dataMovie'])->middleware('auth');
-// Route::get('/data-movie', [MovieController::class, 'dataMovie'])->middleware('auth')->name('movie.index');
+// Route::get('/data-movie', [MovieController::class, 'dataMovie'])->middleware('auth');
+Route::get('/data-movie', [MovieController::class, 'dataMovie'])->middleware('auth')->name('movie.index');
 
 
 

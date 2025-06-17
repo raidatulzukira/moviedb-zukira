@@ -28,13 +28,21 @@
                 <form class="d-flex" role="search"
                     action="{{ request()->is('movie*') ? route('movie.index') : route('category.index') }}" method="GET">
                     <input class="form-control me-2" type="search" name="search" placeholder="Search" value="{{ request('search') }}">
-                    <button class="btn btn-outline-success me-2" type="submit">Search</button>
+                    <button class="btn btn-outline-light me-2" type="submit">Search</button>
                     @if(request('search'))
-                        <a href="{{ request()->is('movie*') ? route('movie.index') : route('category.index') }}" class="btn btn-outline-secondary">Reset</a>
+                        <a href="{{ request()->is('movie*') ? route('movie.index') : route('category.index') }}" class="btn btn-outline-light">Reset</a>
                     @endif
                 </form>
 
-
+                <form class="d-flex" role="search"
+                    action="{{ request()->is('data-movie') ? route('movie.index') : url('/') }}"
+                    method="GET">
+                    <input class="form-control me-2" type="search" name="search" placeholder="Search" value="{{ request('search') }}">
+                    <button class="btn btn-outline-success me-2" type="submit">Search</button>
+                    @if(request('search'))
+                        <a href="{{ request()->is('data-movie') ? route('movie.index') : url('/') }}" class="btn btn-outline-secondary">Reset</a>
+                    @endif
+                </form>
 
             </div>
         </div>
